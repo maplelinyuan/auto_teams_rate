@@ -57,9 +57,6 @@ class AutoTeamsRatePipeline(object):
                         "INSERT INTO " + tableName + " VALUES "
                                                      "('%s', '%s', '%s', '%s', '%s', '%f','%f','%f')"
                 )
-                update_sql = (
-                        'UPDATE %s SET time_score="%s", home_rate=%f, away_rate=%f, support_direction=%f WHERE match_id="%s"'
-                )
                 try:
                     if table_row_len < 1:
                         print('insert数据库')
@@ -67,9 +64,20 @@ class AutoTeamsRatePipeline(object):
                             item['match_id'], item['match_name'], item['home_name'], item['away_name'], item['time_score'],
                             item['home_rate'], item['away_rate'], item['support_direction']))
                     else:
-                        print('update数据库')
-                        cursor.execute(update_sql % (
-                            tableName, item['time_score'], item['home_rate'], item['away_rate'], item['support_direction'], item['match_id']))
+                        if item['has_analysed']:
+                            update_sql = (
+                                'UPDATE %s SET time_score="%s" WHERE match_id="%s"'
+                            )
+                            print('update时间或者比分信息')
+                            cursor.execute(update_sql % (
+                                tableName, item['time_score'], item['match_id']))
+                        else:
+                            update_sql = (
+                                'UPDATE %s SET time_score="%s", home_rate=%f, away_rate=%f, support_direction=%f WHERE match_id="%s"'
+                            )
+                            print('update全部信息')
+                            cursor.execute(update_sql % (
+                                tableName, item['time_score'], item['home_rate'], item['away_rate'], item['support_direction'], item['match_id']))
                 except Exception as e:
                     print("数据库执行失败 ", e)
             # connection is not autocommit by default. So you must commit to save your changes.
