@@ -12,14 +12,14 @@ import pymysql.cursors
 
 # 需要更改的设置位置
 debugging = False    # 若测试则开启抓取结束比赛，并由detect_date指定日期
-detect_date = ['2017-12-25']
+detect_date = ['2018-01-02']
 # 赛季文本 2017/2018
 seasonText = '2017/2018'
 
-competition_list = ['8','16','9','13','1','43','7','70','284','430','135','177','18','10','537','1417','150','283','74',
-                    '15','32','102','640','45','46','87','107','14','5','12','88','136','11','26','89','155','31',
+competition_list = ['8','16','9','13','1','43','7','70','284','430','135','177','18','10','537','1417','150','283',
+                    '15','32','102','640','45','87','107','14','5','12','88','136','11','26','89','155','31','63',
                     '76','162','121','122','109','110','29','36','91','61','17','24','52','119','216','519','22','82',
-                    '33','85','19','97','73','27','28','34','51','577']   # 需要获取信息的联赛competition_id list
+                    '33','85','19','97','73','27','28','34','51','117','138']   # 需要获取信息的联赛competition_id list
 
 current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于8则应该选择yesterday
 nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
@@ -66,6 +66,7 @@ data_competition_dict = {
     '32': '英乙',
     '24': '比甲',
     '52': '比乙',
+    '63': '葡超',
     '119': '波兰超',
     '102': '葡萄牙杯',
     '640': '葡萄牙联赛杯',
@@ -81,6 +82,7 @@ data_competition_dict = {
     '29': '挪超',
     '36': '挪甲',
     '22': '芬超',
+    '117': '伊朗超',
     '76': '伊朗甲',
     '136': '韩K联',
     '162': '乌拉圭甲',
@@ -103,6 +105,12 @@ data_competition_dict = {
     '28': '瑞典超',
     '34': '爱超',
     '51': '中超',
+    '138': '西班牙国王杯'
+}
+
+match_name_dict = {
+    'Australia - A-League': '澳超',
+    'India - Indian Super League': '印度超'
 }
 
 if not debugging:
@@ -124,6 +132,25 @@ if not debugging:
         with connection.cursor() as cursor:
             # 设置当前表名
             tableName = 'teams_' + search_date.replace('-','_')  # 当前查询日期为表名
+            # 建立当前队伍表
+            build_table = (
+                "CREATE TABLE IF NOT EXISTS "' %s '""
+                "(match_id VARCHAR(20) NOT NULL PRIMARY KEY,"
+                "match_name VARCHAR(50) NOT NULL,"
+                "home_name VARCHAR(50) NOT NULL,"
+                "away_name VARCHAR(50) NOT NULL,"
+                "time_score VARCHAR(50) NOT NULL,"
+                "home_rate FLOAT(8) NOT NULL,"
+                "home_a_value INT(10) NOT NULL,"
+                "away_rate FLOAT(8) NOT NULL,"
+                "away_a_value INT(10) NOT NULL,"
+                "support_direction VARCHAR(30) NOT NULL,"
+                "support_direction_2 VARCHAR(30) NOT NULL)"
+            )
+            cursor.execute(build_table % tableName)
+            # 建表完成
+
+
             cursor.execute('SELECT match_id FROM %s WHERE home_rate>0 and away_rate>0' % tableName)
             for matchId in cursor.fetchall():
                 completed_match_id_list.append(matchId['match_id'])
@@ -143,6 +170,8 @@ class match_Item(scrapy.Item):
     time_score = scrapy.Field()   # 比赛时间或者结果
     home_rate = scrapy.Field()   # 主队首发率
     away_rate = scrapy.Field()   # 客队首发率
+    home_player_shirtNumber_list = scrapy.Field()   # 主队首发球员shirtNumber列表
+    away_player_shirtNumber_list = scrapy.Field()   # 客队首发球员shirtNumber列表
     support_direction = scrapy.Field()  # 支持方向
 
 class SoccerSpider(scrapy.Spider):
@@ -189,6 +218,8 @@ class SoccerSpider(scrapy.Spider):
             if competition_id not in competition_list:
                 continue
             match_name = tr.xpath('th/h3/span/text()').extract()[0] # 比赛名称（某个联赛或杯赛等）
+            if match_name in match_name_dict.keys():
+                match_name = match_name_dict[match_name]    # 中英文转换
             href = 'https://cn.soccerway.com/a/block_date_matches?block_id=page_matches_1_block_date_matches_1&callback_params=%7B"bookmaker_urls"%3A%5B%5D%2C"block_service_id"%3A"matches_index_block_datematches"%2C"date"%3A"'+current_search_date+'"%2C"stage-value"%3A"'+stageValue+'"%7D&action=showMatches&params=%7B"competition_id"%3A'+competition_id+'%7D'
             yield scrapy.Request(href, meta={'match_name': match_name},callback=self.sub_matchs_parse, dont_filter=True)
 
@@ -206,6 +237,8 @@ class SoccerSpider(scrapy.Spider):
         match_name = response.meta['match_name']
         home_name = response.meta['home_name']
         away_name = response.meta['away_name']
+        home_player_shirtNumber_list = []
+        away_player_shirtNumber_list = []
         # time_score有时候在span下，有时候没有span
         temp_time_score = response.xpath('//h3[contains(@class,"scoretime")]/text()').extract()[0].strip()
         if temp_time_score == '':
@@ -256,6 +289,8 @@ class SoccerSpider(scrapy.Spider):
                         player_href = 'https://cn.soccerway.com' + tr.xpath('td')[-2].xpath('a/@href').extract()[0]
                     except:
                         pdb.set_trace()
+                    player_shirtNumber = tr.xpath('td')[0].xpath('text()').extract()[0]
+                    home_player_shirtNumber_list.append(player_shirtNumber)
                     player_page = ''
                     while player_page == '':
                         try:
@@ -270,12 +305,11 @@ class SoccerSpider(scrapy.Spider):
                     page = etree.HTML(player_page.text)
                     for seasonTr in page.xpath('//table[contains(@class,"playerstats")]/tbody/tr'):     # 循环球员的赛季表现tr找出满足本赛季本球队的首发信息
                         if seasonTr.xpath('td')[0].xpath('a/text()')[0] == seasonText and seasonTr.xpath('td')[1].xpath('a/text()')[0] == home_name:
-                            try:
-                                home_firstElevenNum += int(seasonTr.xpath('td')[5].xpath('text()')[0])   # 首发次数
-                            except:
-                                print('首发次数出错')
-                                pdb.set_trace()
-                                return False
+                            firstEleven_num_text = seasonTr.xpath('td')[5].xpath('text()')[0]
+                            if firstEleven_num_text.isdigit():
+                                home_firstElevenNum += int(firstEleven_num_text)  # 首发次数
+                            else:
+                                home_firstElevenNum += 0
                             break
                     home_tr_count += 1
 
@@ -286,11 +320,17 @@ class SoccerSpider(scrapy.Spider):
                     if away_tr_count == 11:
                         break
                     player_href = 'https://cn.soccerway.com' + tr.xpath('td')[-2].xpath('a/@href').extract()[0]
+                    player_shirtNumber = tr.xpath('td')[0].xpath('text()').extract()[0]
+                    away_player_shirtNumber_list.append(player_shirtNumber)
                     player_page = requests.get(player_href)
                     page = etree.HTML(player_page.text)
                     for seasonTr in page.xpath('//table[contains(@class,"playerstats")]/tbody/tr'):  # 循环球员的赛季表现tr找出满足本赛季本球队的首发信息
                         if seasonTr.xpath('td')[0].xpath('a/text()')[0] == seasonText and seasonTr.xpath('td')[1].xpath('a/text()')[0] == away_name:
-                            away_firstElevenNum += int(seasonTr.xpath('td')[5].xpath('text()')[0])  # 首发次数
+                            firstEleven_num_text = seasonTr.xpath('td')[5].xpath('text()')[0]
+                            if firstEleven_num_text.isdigit():
+                                away_firstElevenNum += int(firstEleven_num_text)  # 首发次数
+                            else:
+                                away_firstElevenNum += 0
                             break
                     away_tr_count += 1
 
@@ -317,12 +357,12 @@ class SoccerSpider(scrapy.Spider):
                         else:
                             if away_firstEleven_rate < 0.60:
                                 support_direction = -0.5    # 0.5 表示最多胜一球
-                            else:
+                            elif home_firstEleven_rate < 0.7:   # 主场首发》0.70不能买客队
                                 support_direction = -1
                     elif rate_gap >= second_limit_gap:
                         if (home_firstEleven_rate >= 0.70 and (home_firstEleven_rate>away_firstEleven_rate)) or (away_firstEleven_rate < 0.40 and (home_firstEleven_rate>away_firstEleven_rate)):
                             support_direction = 1
-                        elif (away_firstEleven_rate >= 0.70 and (home_firstEleven_rate<away_firstEleven_rate)) or (home_firstEleven_rate < 0.40 and (home_firstEleven_rate<away_firstEleven_rate)):
+                        elif ((away_firstEleven_rate >= 0.70 and (home_firstEleven_rate<away_firstEleven_rate)) or (home_firstEleven_rate < 0.40 and (home_firstEleven_rate<away_firstEleven_rate))) and home_firstEleven_rate < 0.7:
                             support_direction = -1
         # 已经获取首发了的比赛，pipeline中要判断has_analysed不update 下面else中几种数据信息
         else:
@@ -340,6 +380,8 @@ class SoccerSpider(scrapy.Spider):
         single_match_Item['time_score'] = time_score  # 比赛时间或者比分
         single_match_Item['home_rate'] = home_firstEleven_rate  # 主队首发率
         single_match_Item['away_rate'] = away_firstEleven_rate  # 客队首发率
+        single_match_Item['home_player_shirtNumber_list'] = home_player_shirtNumber_list  # 客队首发率
+        single_match_Item['away_player_shirtNumber_list'] = away_player_shirtNumber_list  # 客队首发率
         single_match_Item['support_direction'] = support_direction  # 首发率支持方向
         yield single_match_Item
 

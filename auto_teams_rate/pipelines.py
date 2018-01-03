@@ -5,8 +5,12 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+# 需要更改的参数
+current_season = '17t18'
+
 import pymysql.cursors
 import datetime
+import json
 import pdb
 
 nowadays = datetime.datetime.now().strftime('%Y_%m_%d')
@@ -41,28 +45,119 @@ class AutoTeamsRatePipeline(object):
                     "away_name VARCHAR(50) NOT NULL,"
                     "time_score VARCHAR(50) NOT NULL,"
                     "home_rate FLOAT(8) NOT NULL,"
+                    "home_a_value INT(10) NOT NULL,"
                     "away_rate FLOAT(8) NOT NULL,"
-                    "support_direction FLOAT(8) NOT NULL)"
+                    "away_a_value INT(10) NOT NULL,"
+                    "support_direction VARCHAR(30) NOT NULL,"
+                    "support_direction_2 VARCHAR(30) NOT NULL)"
                 )
                 cursor.execute(build_table % tableName)
                 # 建表完成
 
-                # 将表的安全更新模式关掉，不然不使用key column的更新成功不了
-                # cursor.execute('set sql_safe_updates=off')
+                home_a_value = 0
+                away_a_value = 0
+                first_direction = 0    # 考虑首发率的支持方向
+                second_direction = 0    # 根据市场价与首发率一起考虑的支持方向
+                # 根据主客名称去查询身价，并计算出平均身价
+                with open('auto_teams_rate/league2english.json', 'r', encoding='utf-8') as league_json_file:
+                    league2english = json.load(league_json_file)
+                league2english_key_list = league2english.keys()
+                # 如果已经设置了本联赛的中英转换 且 主客任一shirtNumber_list 不为空就继续
+                if item['match_name'] in league2english_key_list and len(item['home_player_shirtNumber_list']) != 0:
+                    with open('auto_teams_rate/chinese2english.json','r', encoding='utf-8') as json_file:
+                        chinese2english = json.load(json_file)
+                    home_english_name = chinese2english[item['home_name']]
+                    database_name = current_season + '_league_' + league2english[item['match_name']]
+                    # 搜索主队首发的身价
+                    home_table_name = database_name + '.teams_' + home_english_name
+                    temp_home_shirtNum_purple = '('
+                    for shirtNum in item['home_player_shirtNumber_list']:
+                        temp_home_shirtNum_purple += '"'
+                        temp_home_shirtNum_purple += str(shirtNum)
+                        temp_home_shirtNum_purple += '"'
+                        temp_home_shirtNum_purple += ','
+                    home_shirtNum_purple = temp_home_shirtNum_purple[0:-1] + ')'
+                    search_home_sql = 'SELECT value FROM %s WHERE shirtNumber in %s' % (home_table_name, home_shirtNum_purple)
+                    cursor.execute(search_home_sql)
+                    for query in cursor.fetchall():
+                        value_text = query['value']
+                        currency_text = value_text.split(' ')[1]
+                        value_num = 0
+                        if currency_text == 'Mill.':
+                            try:
+                                value_num = int(value_text.split(' ')[0].replace(',',''))   # 以万欧为单位
+                            except Exception as e:
+                                print('转换价格到数字出错:',e)
+                                pdb.set_trace()
+                        elif currency_text == 'Th.':
+                            try:
+                                value_num = int(value_text.split(' ')[0].replace(',',''))/10
+                            except Exception as e:
+                                print('转换价格到数字出错:',e)
+                                pdb.set_trace()
+                        home_a_value += value_num
+                    home_a_value = home_a_value/11
+
+                    # 搜索客队首发的身价
+                    away_english_name = chinese2english[item['away_name']]
+                    away_table_name = database_name + '.teams_' + away_english_name
+                    temp_away_shirtNum_purple = '('
+                    for shirtNum in item['away_player_shirtNumber_list']:
+                        temp_away_shirtNum_purple += '"'
+                        temp_away_shirtNum_purple += shirtNum
+                        temp_away_shirtNum_purple += '"'
+                        temp_away_shirtNum_purple += ','
+                    away_shirtNum_purple = temp_away_shirtNum_purple[0:-1] + ')'
+                    search_away_sql = 'SELECT value FROM %s WHERE shirtNumber in %s' % (away_table_name, away_shirtNum_purple)
+                    cursor.execute(search_away_sql)
+                    for query in cursor.fetchall():
+                        value_text = query['value']
+                        currency_text = value_text.split(' ')[1]
+                        value_num = 0
+                        if currency_text == 'Mill.':
+                            try:
+                                value_num = int(value_text.split(' ')[0].replace(',', ''))  # 以万欧为单位
+                            except Exception as e:
+                                print('转换价格到数字出错:', e)
+                                pdb.set_trace()
+                        elif currency_text == 'Th.':
+                            try:
+                                value_num = int(value_text.split(' ')[0].replace(',', '')) / 10
+                            except Exception as e:
+                                print('转换价格到数字出错:', e)
+                                pdb.set_trace()
+                        away_a_value += value_num
+                    away_a_value = away_a_value / 11
+
+                    # 将第一个支持方向改为文字
+                    if item['support_direction'] == 0:
+                        first_direction = '0'
+                    elif item['support_direction'] == 1:
+                        first_direction = '主队盘口（不超过两球）'
+                    elif item['support_direction'] == 0.5:
+                        first_direction = '主队盘口（最多胜一球）'
+                    elif item['support_direction'] == -1:
+                        first_direction = '客队盘口（不超过两球）'
+
+                    # 进一步分析support_direction
+                    if (item['home_rate'] - item['away_rate']) >= 0.10 and home_a_value >= 2*away_a_value:
+                        second_direction = '主队盘口（不超过两球）'
+                    elif abs(item['home_rate'] - item['away_rate']) < 0.10 and home_a_value*2 > away_a_value:
+                        second_direction = '主队不败'
 
                 cursor.execute('SELECT match_id FROM %s WHERE match_id=%s' % (tableName, item['match_id']))
                 table_row_len = len(cursor.fetchall())
                 print('表中存在查询数据的数目：:', table_row_len)
                 insert_sql = (
                         "INSERT INTO " + tableName + " VALUES "
-                                                     "('%s', '%s', '%s', '%s', '%s', '%f','%f','%f')"
+                                                     "('%s', '%s', '%s', '%s', '%s', '%f','%d','%f','%d','%s', '%s')"
                 )
                 try:
                     if table_row_len < 1:
                         print('insert数据库')
                         cursor.execute(insert_sql % (
                             item['match_id'], item['match_name'], item['home_name'], item['away_name'], item['time_score'],
-                            item['home_rate'], item['away_rate'], item['support_direction']))
+                            item['home_rate'], home_a_value, item['away_rate'], away_a_value, first_direction, second_direction))
                     else:
                         if item['has_analysed']:
                             update_sql = (
@@ -73,11 +168,11 @@ class AutoTeamsRatePipeline(object):
                                 tableName, item['time_score'], item['match_id']))
                         else:
                             update_sql = (
-                                'UPDATE %s SET time_score="%s", home_rate=%f, away_rate=%f, support_direction=%f WHERE match_id="%s"'
+                                'UPDATE %s SET time_score="%s", home_rate=%f, home_a_value=%d, away_rate=%f, away_a_value=%d, support_direction="%s", support_direction_2="%s" WHERE match_id="%s"'
                             )
                             print('update全部信息')
                             cursor.execute(update_sql % (
-                                tableName, item['time_score'], item['home_rate'], item['away_rate'], item['support_direction'], item['match_id']))
+                                tableName, item['time_score'], item['home_rate'], home_a_value, item['away_rate'], away_a_value, first_direction, second_direction, item['match_id']))
                 except Exception as e:
                     print("数据库执行失败 ", e)
             # connection is not autocommit by default. So you must commit to save your changes.
