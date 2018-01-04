@@ -106,7 +106,7 @@ class AutoTeamsRatePipeline(object):
                         home_a_value = home_a_value/11
 
                         # 搜索客队首发的身价】
-                        away_database_name = current_season + '_league_' + chinese2english[item['home_name']]['league']
+                        away_database_name = current_season + '_league_' + chinese2english[item['away_name']]['league']
                         away_english_name = chinese2english[item['away_name']]['name']
                         away_table_name = away_database_name + '.teams_' + away_english_name
                         temp_away_shirtNum_purple = '('
@@ -235,8 +235,7 @@ class AutoTeamsRatePipeline(object):
                     # 建表完成
 
                     for single_match in match_list:
-                        pdb.set_trace()
-                        cursor.execute('SELECT match_id FROM "%s" WHERE match_id=%s' % (tableName, single_match['match_id']))
+                        cursor.execute('SELECT match_id FROM %s WHERE match_id="%s"' % (tableName, single_match['match_id']))
                         table_row_len = len(cursor.fetchall())
                         print('analysis 表中存在查询数据的数目：:', table_row_len)
                         insert_sql = (

@@ -24,9 +24,9 @@ def timming_exe(cmd, inc=60):
 
 crawl_commend_1 = 'scrapy crawl auto_teams_rate'
 crawl_commend_2 = 'scrapy crawl odds_spider'
-Timer(5,timming_exe, (crawl_commend_1, 900)).start()
+Timer(5,timming_exe, (crawl_commend_1, 720)).start()
 print('保存爬虫任务：', crawl_commend_1)
-Timer(6,timming_exe, (crawl_commend_2, 550)).start()
+Timer(6,timming_exe, (crawl_commend_2, 360)).start()
 print('保存爬虫任务：', crawl_commend_2)
 
 

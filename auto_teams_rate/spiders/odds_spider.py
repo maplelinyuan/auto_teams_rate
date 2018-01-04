@@ -293,7 +293,7 @@ class OddSpider(scrapy.Spider):
                                     support_direction = '客队大概率不败'
                                 elif odd_match_list[fount_index]['away_now_probability'] > 0.14:
                                     support_direction = '客队大概率最多输一球'
-                single_match_item = []
+                single_match_item = {}
                 single_match_item['match_id'] = match_id
                 single_match_item['match_name'] = match_name
                 single_match_item['time_score'] = time_score
