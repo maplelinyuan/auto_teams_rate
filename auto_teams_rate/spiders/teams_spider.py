@@ -114,60 +114,12 @@ match_name_dict = {
     'Portugal - Primeira Liga': '葡超'
 }
 
-if not debugging:
-    completed_match_id_list = []
-    # Connect to the database
-    # 去拿取已经获得首发率的match_id放入列表中，不去服务器拉取该比赛球员数据
-    db_name = 'auto_teams_rate'
-    config = {
-        'host': '127.0.0.1',
-        'user': 'root',
-        'password': '19940929',
-        'db': db_name,
-        'charset': 'utf8mb4',
-        'cursorclass': pymysql.cursors.DictCursor
-    }
-    connection = pymysql.connect(**config)
-    print('连接至数据库:' + db_name)
-    try:
-        with connection.cursor() as cursor:
-            # 设置当前表名
-            tableName = 'teams_' + search_date.replace('-','_')  # 当前查询日期为表名
-            # 建立当前队伍表
-            build_table = (
-                "CREATE TABLE IF NOT EXISTS "' %s '""
-                "(match_id VARCHAR(20) NOT NULL PRIMARY KEY,"
-                "match_name VARCHAR(50) NOT NULL,"
-                "home_name VARCHAR(50) NOT NULL,"
-                "away_name VARCHAR(50) NOT NULL,"
-                "time_score VARCHAR(50) NOT NULL,"
-                "home_rate FLOAT(8) NOT NULL,"
-                "home_a_value INT(10) NOT NULL,"
-                "away_rate FLOAT(8) NOT NULL,"
-                "away_a_value INT(10) NOT NULL,"
-                "average_completed_match INT(8) NOT NULL,"
-                "home_direction_probability FLOAT(8) NOT NULL,"
-                "away_direction_probability FLOAT(8) NOT NULL,"
-                "support_direction VARCHAR(30) NOT NULL,"
-                "support_direction_2 VARCHAR(30) NOT NULL)"
-            )
-            cursor.execute(build_table % tableName)
-            # 建表完成
-
-
-            cursor.execute('SELECT match_id FROM %s WHERE home_rate>0 and away_rate>0' % tableName)
-            for matchId in cursor.fetchall():
-                completed_match_id_list.append(matchId['match_id'])
-            # connection is not autocommit by default. So you must commit to save your changes.
-            cursor.close()
-    finally:
-        connection.close()
-    print("已经获得首发的比赛ID列表:",completed_match_id_list)
+completed_match_id_list = []
 
 # 单场比赛 item
 class match_Item(scrapy.Item):
     match_name = scrapy.Field()  # 联赛名称
-    has_analysed = scrapy.Field()  # 比赛ID
+    has_analysed = scrapy.Field()  # 是否已经分析过
     match_id = scrapy.Field()  # 比赛ID
     home_name = scrapy.Field()  # 主队名称
     away_name = scrapy.Field()    # 客队名称
@@ -182,6 +134,54 @@ class match_Item(scrapy.Item):
 class SoccerSpider(scrapy.Spider):
     name = 'auto_teams_rate'
     allowed_domains = ['https://cn.soccerway.com/']
+
+    if not debugging:
+        # Connect to the database
+        # 去拿取已经获得首发率的match_id放入列表中，不去服务器拉取该比赛球员数据
+        db_name = 'auto_teams_rate'
+        config = {
+            'host': '127.0.0.1',
+            'user': 'root',
+            'password': '19940929',
+            'db': db_name,
+            'charset': 'utf8mb4',
+            'cursorclass': pymysql.cursors.DictCursor
+        }
+        connection = pymysql.connect(**config)
+        print('连接至数据库:' + db_name)
+        try:
+            with connection.cursor() as cursor:
+                # 设置当前表名
+                tableName = 'teams_' + search_date.replace('-', '_')  # 当前查询日期为表名
+                # 建立当前队伍表
+                build_table = (
+                    "CREATE TABLE IF NOT EXISTS "' %s '""
+                    "(match_id VARCHAR(20) NOT NULL PRIMARY KEY,"
+                    "match_name VARCHAR(50) NOT NULL,"
+                    "home_name VARCHAR(50) NOT NULL,"
+                    "away_name VARCHAR(50) NOT NULL,"
+                    "time_score VARCHAR(50) NOT NULL,"
+                    "home_rate FLOAT(8) NOT NULL,"
+                    "home_a_value INT(10) NOT NULL,"
+                    "away_rate FLOAT(8) NOT NULL,"
+                    "away_a_value INT(10) NOT NULL,"
+                    "average_completed_match INT(8) NOT NULL,"
+                    "home_direction_probability FLOAT(8) NOT NULL,"
+                    "away_direction_probability FLOAT(8) NOT NULL,"
+                    "support_direction VARCHAR(30) NOT NULL,"
+                    "support_direction_2 VARCHAR(30) NOT NULL)"
+                )
+                cursor.execute(build_table % tableName)
+                # 建表完成
+
+                cursor.execute('SELECT match_id FROM %s WHERE home_rate>0 and away_rate>0' % tableName)
+                for matchId in cursor.fetchall():
+                    completed_match_id_list.append(matchId['match_id'])
+                # connection is not autocommit by default. So you must commit to save your changes.
+                cursor.close()
+        finally:
+            connection.close()
+        print("已经获得首发的比赛ID列表:", completed_match_id_list)
 
     # 包装url
     start_urls = []
@@ -388,8 +388,8 @@ class SoccerSpider(scrapy.Spider):
         single_match_Item['home_rate'] = home_firstEleven_rate  # 主队首发率
         single_match_Item['away_rate'] = away_firstEleven_rate  # 客队首发率
         single_match_Item['average_completed_match'] = average_completed_match  # 平均首发轮次
-        single_match_Item['home_player_shirtNumber_list'] = home_player_shirtNumber_list  # 客队首发率
-        single_match_Item['away_player_shirtNumber_list'] = away_player_shirtNumber_list  # 客队首发率
+        single_match_Item['home_player_shirtNumber_list'] = home_player_shirtNumber_list  # 主队首发number list
+        single_match_Item['away_player_shirtNumber_list'] = away_player_shirtNumber_list  # 客队首发number list
         single_match_Item['support_direction'] = support_direction  # 首发率支持方向
         yield single_match_Item
 

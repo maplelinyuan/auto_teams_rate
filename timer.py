@@ -22,9 +22,12 @@ def timming_exe(cmd, inc=60):
     schedule.run()
 
 
-crawl_commend = 'scrapy crawl auto_teams_rate'
-Timer(5,timming_exe, (crawl_commend, 900)).start()
-print('保存爬虫任务：', crawl_commend)
+crawl_commend_1 = 'scrapy crawl auto_teams_rate'
+crawl_commend_2 = 'scrapy crawl odds_spider'
+Timer(5,timming_exe, (crawl_commend_1, 900)).start()
+print('保存爬虫任务：', crawl_commend_1)
+Timer(6,timming_exe, (crawl_commend_2, 550)).start()
+print('保存爬虫任务：', crawl_commend_2)
 
 
 
