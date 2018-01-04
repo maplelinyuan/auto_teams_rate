@@ -12,14 +12,14 @@ import pymysql.cursors
 
 # 需要更改的设置位置
 debugging = False    # 若测试则开启抓取结束比赛，并由detect_date指定日期
-detect_date = ['2018-01-02']
+detect_date = ['2018-01-03']
 # 赛季文本 2017/2018
 seasonText = '2017/2018'
 
 competition_list = ['8','16','9','13','1','43','7','70','284','430','135','177','18','10','537','1417','150','283',
                     '15','32','102','640','45','87','107','14','5','12','88','136','11','26','89','155','31','63',
-                    '76','162','121','122','109','110','29','36','91','61','17','24','52','119','216','519','22','82',
-                    '33','85','19','97','73','27','28','34','51','117','138']   # 需要获取信息的联赛competition_id list
+                    '162','121','122','109','110','29','36','91','61','17','24','52','119','216','519','22','82',
+                    '33','85','19','97','73','27','28','34','51','138']   # 需要获取信息的联赛competition_id list
 
 current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于8则应该选择yesterday
 nowadays = datetime.datetime.now().strftime("%Y-%m-%d")  # 获取当前日期 格式2018-01-01
@@ -110,7 +110,8 @@ data_competition_dict = {
 
 match_name_dict = {
     'Australia - A-League': '澳超',
-    'India - Indian Super League': '印度超'
+    'India - Indian Super League': '印度超',
+    'Portugal - Primeira Liga': '葡超'
 }
 
 if not debugging:
@@ -144,6 +145,9 @@ if not debugging:
                 "home_a_value INT(10) NOT NULL,"
                 "away_rate FLOAT(8) NOT NULL,"
                 "away_a_value INT(10) NOT NULL,"
+                "average_completed_match INT(8) NOT NULL,"
+                "home_direction_probability FLOAT(8) NOT NULL,"
+                "away_direction_probability FLOAT(8) NOT NULL,"
                 "support_direction VARCHAR(30) NOT NULL,"
                 "support_direction_2 VARCHAR(30) NOT NULL)"
             )
@@ -170,6 +174,7 @@ class match_Item(scrapy.Item):
     time_score = scrapy.Field()   # 比赛时间或者结果
     home_rate = scrapy.Field()   # 主队首发率
     away_rate = scrapy.Field()   # 客队首发率
+    average_completed_match = scrapy.Field()   # 平均首发轮次
     home_player_shirtNumber_list = scrapy.Field()   # 主队首发球员shirtNumber列表
     away_player_shirtNumber_list = scrapy.Field()   # 客队首发球员shirtNumber列表
     support_direction = scrapy.Field()  # 支持方向
@@ -257,6 +262,7 @@ class SoccerSpider(scrapy.Spider):
             if (start_hour - cur_hour) > 1 or (start_hour - cur_hour) < -3:
                 return False
 
+        average_completed_match = 0     # 平均比赛轮次
         # 没有获得首发球员的比赛才去拉取球员信息
         if not has_analysed:
             lineups_container = response.xpath('//div[contains(@class,"combined-lineups-container")]')  # 如果首发已出则长度不为0，否则存在首发
@@ -277,6 +283,7 @@ class SoccerSpider(scrapy.Spider):
                         away_completed_match = int(highlight_tr.xpath('td')[2].xpath('text()').extract()[0])
                     if home_completed_match != '' and away_completed_match != '':
                         break
+                average_completed_match = (home_completed_match + away_completed_match)/2
 
                 # 开始收集主客球员首发信息
                 # home_team
@@ -380,6 +387,7 @@ class SoccerSpider(scrapy.Spider):
         single_match_Item['time_score'] = time_score  # 比赛时间或者比分
         single_match_Item['home_rate'] = home_firstEleven_rate  # 主队首发率
         single_match_Item['away_rate'] = away_firstEleven_rate  # 客队首发率
+        single_match_Item['average_completed_match'] = average_completed_match  # 平均首发轮次
         single_match_Item['home_player_shirtNumber_list'] = home_player_shirtNumber_list  # 客队首发率
         single_match_Item['away_player_shirtNumber_list'] = away_player_shirtNumber_list  # 客队首发率
         single_match_Item['support_direction'] = support_direction  # 首发率支持方向
