@@ -145,11 +145,17 @@ class AutoTeamsRatePipeline(object):
                         if item['support_direction'] == 0:
                             first_direction = '0'
                         elif item['support_direction'] == 1:
-                            first_direction = '主队盘口'
+                            first_direction = '主队盘口(不超过两球)'
 
                         # 进一步分析support_direction
                         if home_direction_probability >= 0.80:
-                            second_direction = '主胜'
+                            if home_direction_probability > 0.90:
+                                second_direction = '主90%胜两球'
+                            else:
+                                if (item['home_rate'] - item['away_rate']) < -0.10:
+                                    second_direction = '主90%胜,但难胜两球'
+                                else:
+                                    second_direction = '主90%胜'
 
                     cursor.execute('SELECT match_id FROM %s WHERE match_id=%s' % (tableName, item['match_id']))
                     table_row_len = len(cursor.fetchall())

@@ -369,7 +369,7 @@ class SoccerSpider(scrapy.Spider):
                 # 防止大于1的错误数据影响
                 if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
                     if rate_gap >= first_limit_gap:
-                        if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate<0.5:
+                        if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate < 0.5:
                             support_direction = 1
         # 已经获取首发了的比赛，pipeline中要判断has_analysed不update 下面else中几种数据信息
         else:
