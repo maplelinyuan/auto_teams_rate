@@ -145,7 +145,11 @@ class AutoTeamsRatePipeline(object):
                         if item['support_direction'] == 0:
                             first_direction = '0'
                         elif item['support_direction'] == 1:
-                            first_direction = '主队盘口(不超过两球)'
+                            first_direction = '90%主队盘口(不超过两球),如果联赛不同还需要比较主-客rate差,基础是0.22,差两个联赛要求+0.20'
+                        elif item['support_direction'] == -1:
+                            first_direction = '主队90%无胜'
+                        elif item['support_direction'] == -0.5:
+                            first_direction = '主队70%不可能赢盘'
 
                         # 进一步分析support_direction
                         if home_direction_probability >= 0.80:
