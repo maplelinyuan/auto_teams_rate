@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # import os
 import scrapy
-import pdb
+# import pdb
 import datetime, time
 import re
 import json
@@ -18,7 +18,7 @@ seasonText = '2017/2018'
 
 competition_list = ['8','16','9','13','1','43','7','70','284','430','135','177','18','10','537','1417','150','283',
                     '15','32','102','640','45','87','107','14','5','12','88','136','11','26','89','155','31','63',
-                    '162','121','122','109','110','29','36','91','61','17','24','52','119','216','519','22','82',
+                    '162','121','122','109','110','29','36','91','61','17','24','119','216','519','22','82',
                     '33','85','19','97','73','27','28','34','51','138','93']   # 需要获取信息的联赛competition_id list
 
 current_hour = time.localtime()[3]  # 获取当前的小时数，如果小于8则应该选择yesterday
@@ -296,7 +296,7 @@ class SoccerSpider(scrapy.Spider):
                     try:
                         player_href = 'https://cn.soccerway.com' + tr.xpath('td')[-2].xpath('a/@href').extract()[0]
                     except:
-                        pdb.set_trace()
+                        print('error:298')
                     player_shirtNumber = tr.xpath('td')[0].xpath('text()').extract()[0]
                     home_player_shirtNumber_list.append(player_shirtNumber)
                     player_page = ''
@@ -330,7 +330,17 @@ class SoccerSpider(scrapy.Spider):
                     player_href = 'https://cn.soccerway.com' + tr.xpath('td')[-2].xpath('a/@href').extract()[0]
                     player_shirtNumber = tr.xpath('td')[0].xpath('text()').extract()[0]
                     away_player_shirtNumber_list.append(player_shirtNumber)
-                    player_page = requests.get(player_href)
+                    player_page = ''
+                    while player_page == '':
+                        try:
+                            player_page = requests.get(player_href)
+                        except:
+                            print("Connection refused by the server..")
+                            print("Let me sleep for 5 seconds")
+                            print("ZZzzzz...")
+                            time.sleep(5)
+                            print("Was a nice sleep, now let me continue...")
+                            continue
                     page = etree.HTML(player_page.text)
                     for seasonTr in page.xpath('//table[contains(@class,"playerstats")]/tbody/tr'):  # 循环球员的赛季表现tr找出满足本赛季本球队的首发信息
                         if seasonTr.xpath('td')[0].xpath('a/text()')[0] == seasonText and seasonTr.xpath('td')[1].xpath('a/text()')[0] == away_name:
@@ -355,23 +365,12 @@ class SoccerSpider(scrapy.Spider):
                 # else:
                 #     first_limit_gap = 0.20
                 #     second_limit_gap = 0.15
-                first_limit_gap = 0.25
-                second_limit_gap = 0.20
+                first_limit_gap = 0.22
                 # 防止大于1的错误数据影响
                 if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
                     if rate_gap >= first_limit_gap:
-                        if home_firstEleven_rate > away_firstEleven_rate:
+                        if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate<0.5:
                             support_direction = 1
-                        else:
-                            if away_firstEleven_rate < 0.60:
-                                support_direction = -0.5    # 0.5 表示最多胜一球
-                            elif home_firstEleven_rate < 0.7:   # 主场首发》0.70不能买客队
-                                support_direction = -1
-                    elif rate_gap >= second_limit_gap:
-                        if (home_firstEleven_rate >= 0.70 and (home_firstEleven_rate>away_firstEleven_rate)) or (away_firstEleven_rate < 0.40 and (home_firstEleven_rate>away_firstEleven_rate)):
-                            support_direction = 1
-                        elif ((away_firstEleven_rate >= 0.70 and (home_firstEleven_rate<away_firstEleven_rate)) or (home_firstEleven_rate < 0.40 and (home_firstEleven_rate<away_firstEleven_rate))) and home_firstEleven_rate < 0.7:
-                            support_direction = -1
         # 已经获取首发了的比赛，pipeline中要判断has_analysed不update 下面else中几种数据信息
         else:
             home_firstEleven_rate = ''
@@ -420,7 +419,7 @@ class SoccerSpider(scrapy.Spider):
                 away_name = tr.xpath('td')[3].xpath('a')[0].attrib['title']
                 href = 'https://cn.soccerway.com' + tr.xpath('td')[2].xpath('a')[0].attrib['href']
             except Exception as e:
-                pdb.set_trace()
+                p
             yield scrapy.Request(href, meta={'match_id':match_id,'match_name': match_name,'home_name':home_name, 'away_name':away_name, 'main_match':False, 'has_analysed':has_analysed}, callback=self.single_match_parse, dont_filter=True)
 
 

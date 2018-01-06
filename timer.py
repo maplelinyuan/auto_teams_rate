@@ -23,7 +23,7 @@ def timming_exe(cmd, inc=60):
 
 
 crawl_commend_1 = 'scrapy crawl auto_teams_rate'
-Timer(5,timming_exe, (crawl_commend_1, 599)).start()
+Timer(5, timming_exe, (crawl_commend_1, 599)).start()
 print('保存爬虫任务：', crawl_commend_1)
 
 
