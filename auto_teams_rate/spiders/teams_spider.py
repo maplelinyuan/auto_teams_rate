@@ -359,13 +359,13 @@ class SoccerSpider(scrapy.Spider):
                 rate_gap = round(abs(home_firstEleven_rate - away_firstEleven_rate), 2)
 
                 # # 防止大于1的错误数据影响
-                # first_limit_gap = 0.22  # limit_gap值
-                # if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
-                #     if rate_gap >= first_limit_gap:
-                #         if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate < 0.5:
-                #             support_direction = 1
-                #     if home_firstEleven_rate <= 0.40:
-                #         support_direction = -1
+                first_limit_gap = 0.22  # limit_gap值
+                if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
+                    if rate_gap >= first_limit_gap:
+                        if home_firstEleven_rate > away_firstEleven_rate:
+                            support_direction = 1
+                        else:
+                            support_direction = -1
                     # if away_firstEleven_rate >= 0.75:
                     #     support_direction = -0.5
         # 已经获取首发了的比赛，pipeline中要判断has_analysed不update 下面else中几种数据信息

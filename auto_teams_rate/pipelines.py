@@ -152,14 +152,14 @@ class AutoTeamsRatePipeline(object):
                         #     first_direction = '主队70%不可能赢盘'
 
                         # 进一步分析support_direction
-                        if home_direction_probability > 0.70:
+                        if home_direction_probability > 0.80:
                             if home_direction_probability > 0.90:
                                 second_direction = '主90%胜两球'
-                            # else:
-                            #     if (item['home_rate'] - item['away_rate']) < -0.10:
-                            #         second_direction = '主90%胜,但难胜两球'
-                            #     else:
-                            #         second_direction = '主90%胜'
+                            else:
+                                if (item['home_rate'] - item['away_rate']) < -0.10:
+                                    second_direction = '主90%胜,但难胜两球'
+                                else:
+                                    second_direction = '主90%胜'
                         # if away_direction_probability >= 0.80:
                         #     second_direction = '客80%不败,进球后或上半场后及时对冲'
 

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py" line="370" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="6c5eff51-f175-42a0-aa75-6274436c76de" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -18,15 +15,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="teams_spider.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="teams_spider.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="377" column="49" lean-forward="true" selection-start-line="377" selection-start-column="49" selection-end-line="377" selection-end-column="49" />
+            <state relative-caret-position="327">
+              <caret line="363" column="48" lean-forward="false" selection-start-line="363" selection-start-column="48" selection-end-line="363" selection-end-column="48" />
               <folding>
                 <element signature="e#36#49#0" expanded="true" />
-                <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-                <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+                <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+                <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
               </folding>
             </state>
           </provider>
@@ -42,22 +39,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/auto_teams_rate/pipelines.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="163" column="63" lean-forward="false" selection-start-line="163" selection-start-column="63" selection-end-line="163" selection-end-column="63" />
+            <state relative-caret-position="289">
+              <caret line="156" column="60" lean-forward="false" selection-start-line="156" selection-start-column="60" selection-end-line="156" selection-end-column="60" />
               <folding>
                 <element signature="e#229#251#0" expanded="true" />
-                <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-                <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-                <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-                <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-                <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-                <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-                <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-                <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-                <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+                <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+                <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+                <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+                <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+                <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+                <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+                <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+                <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+                <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
               </folding>
             </state>
           </provider>
@@ -66,7 +63,7 @@
       <file leaf-file-name="timer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/timer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
+            <state relative-caret-position="247">
               <caret line="14" column="18" lean-forward="false" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
               <folding>
                 <element signature="e#38#60#0" expanded="true" />
@@ -108,7 +105,7 @@
       <file leaf-file-name="transfer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/transfer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
+            <state relative-caret-position="304">
               <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
@@ -159,10 +156,10 @@
       <find>斯特</find>
       <find>chinese</find>
       <find>away_direction_probability</find>
-      <find>support_direction</find>
-      <find>first_direction</find>
       <find>first_direction</find>
       <find>item['support_direction']</find>
+      <find>.meta</find>
+      <find>support_direction</find>
     </findStrings>
     <replaceStrings>
       <replace>player_href = 'https://cn.soccerway.com' + tr.xpath('td')[-2].xpath('a/</replace>
@@ -192,8 +189,8 @@
         <option value="$PROJECT_DIR$/readme.txt" />
         <option value="$PROJECT_DIR$/auto_teams_rate/chinese2english.json" />
         <option value="$PROJECT_DIR$/timer.py" />
-        <option value="$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py" />
         <option value="$PROJECT_DIR$/auto_teams_rate/pipelines.py" />
+        <option value="$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py" />
       </list>
     </option>
   </component>
@@ -204,8 +201,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="839" />
+    <option name="y" value="127" />
     <option name="width" value="1366" />
-    <option name="height" value="728" />
+    <option name="height" value="828" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -223,6 +222,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -240,12 +240,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../auto_odds_compare" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -291,8 +290,8 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33841133" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1359275" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33841133" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1369936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -362,8 +361,8 @@
           <caret line="183" column="56" lean-forward="false" selection-start-line="137" selection-start-column="4" selection-end-line="183" selection-end-column="56" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
@@ -382,15 +381,15 @@
           <caret line="199" column="0" lean-forward="false" selection-start-line="199" selection-start-column="0" selection-end-line="199" selection-end-column="0" />
           <folding>
             <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
@@ -450,8 +449,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
@@ -463,15 +462,15 @@
           <caret line="246" column="48" lean-forward="false" selection-start-line="246" selection-start-column="39" selection-end-line="246" selection-end-column="48" />
           <folding>
             <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
@@ -531,8 +530,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
@@ -543,15 +542,15 @@
           <caret line="14" column="36" lean-forward="false" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
           <folding>
             <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
@@ -570,8 +569,8 @@
           <caret line="24" column="23" lean-forward="false" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
@@ -590,15 +589,15 @@
           <caret line="14" column="36" lean-forward="true" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
           <folding>
             <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
@@ -609,8 +608,8 @@
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
@@ -621,15 +620,15 @@
           <caret line="8" column="27" lean-forward="false" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="27" />
           <folding>
             <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
@@ -717,7 +716,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/transfer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
+        <state relative-caret-position="304">
           <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
@@ -732,7 +731,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/timer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
+        <state relative-caret-position="247">
           <caret line="14" column="18" lean-forward="false" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
           <folding>
             <element signature="e#38#60#0" expanded="true" />
@@ -744,9 +743,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="206">
           <caret line="95" column="40" lean-forward="false" selection-start-line="95" selection-start-column="40" selection-end-line="95" selection-end-column="40" />
-          <folding>
-            <element signature="e#331#475#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -784,33 +780,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py">
+    <entry file="file://$PROJECT_DIR$/auto_teams_rate/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="377" column="49" lean-forward="true" selection-start-line="377" selection-start-column="49" selection-end-line="377" selection-end-column="49" />
+        <state relative-caret-position="289">
+          <caret line="156" column="60" lean-forward="false" selection-start-line="156" selection-start-column="60" selection-end-line="156" selection-end-column="60" />
           <folding>
-            <element signature="e#36#49#0" expanded="true" />
-            <marker date="1515321615572" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
-            <marker date="1515321615572" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
+            <element signature="e#229#251#0" expanded="true" />
+            <marker date="1515412877139" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
+            <marker date="1515412877139" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
+            <marker date="1515412877139" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9290" ph="SELECT home_... missing_value" />
+            <marker date="1515412877139" expanded="true" signature="9251:9292" ph="SELECT match... %s" />
+            <marker date="1515412877139" expanded="true" signature="10431:10480" ph="UPDATE %s... " />
+            <marker date="1515412877139" expanded="true" signature="10838:11089" ph="UPDATE %s... " />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/auto_teams_rate/pipelines.py">
+    <entry file="file://$PROJECT_DIR$/auto_teams_rate/spiders/teams_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="163" column="63" lean-forward="false" selection-start-line="163" selection-start-column="63" selection-end-line="163" selection-end-column="63" />
+        <state relative-caret-position="327">
+          <caret line="363" column="48" lean-forward="false" selection-start-line="363" selection-start-column="48" selection-end-line="363" selection-end-column="48" />
           <folding>
-            <element signature="e#229#251#0" expanded="true" />
-            <marker date="1515345197574" expanded="true" signature="1401:2309" ph="CREATE TABLE... IF" />
-            <marker date="1515345197574" expanded="true" signature="4345:4386" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="4345:4387" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="4345:4389" ph="SELECT value... %s" />
-            <marker date="1515345197574" expanded="true" signature="6390:6432" ph="SELECT value... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9270" ph="SELECT home_... missing_value" />
-            <marker date="1515345197574" expanded="true" signature="9231:9272" ph="SELECT match... %s" />
-            <marker date="1515345197574" expanded="true" signature="10411:10460" ph="UPDATE %s... " />
-            <marker date="1515345197574" expanded="true" signature="10818:11069" ph="UPDATE %s... " />
+            <element signature="e#36#49#0" expanded="true" />
+            <marker date="1515418913089" expanded="true" signature="4103:4955" ph="CREATE TABLE... IF" />
+            <marker date="1515418913089" expanded="true" signature="5087:5144" ph="SELECT match... missing_value" />
           </folding>
         </state>
       </provider>
