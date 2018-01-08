@@ -359,27 +359,15 @@ class SoccerSpider(scrapy.Spider):
                 rate_gap = round(abs(home_firstEleven_rate - away_firstEleven_rate), 2)
 
                 # # 防止大于1的错误数据影响
-                # with open('auto_teams_rate/chinese2english.json', 'r', encoding='utf-8') as json_file:
-                #     chinese2english = json.load(json_file)
-                # home_league_num = 0
-                # away_league_num = 0
-                # if home_name in chinese2english.keys() and away_name in chinese2english.keys():
-                #     home_league_num = int(chinese2english[home_name]['league'])  # 主队所在联赛数字
-                #     away_league_num = chinese2english[away_name]['league']  # 客队所在联赛数字
-                #
-                # if home_league_num != 0 and (home_league_num != away_league_num):
-                #     league_num_differ = home_league_num - away_league_num
-                # else:
-                #     first_limit_gap = 0.22  # limit_gap值
-                first_limit_gap = 0.22  # limit_gap值
-                if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
-                    if rate_gap >= first_limit_gap:
-                        if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate < 0.5:
-                            support_direction = 1
-                    if home_firstEleven_rate <= 0.40:
-                        support_direction = -1
-                    if away_firstEleven_rate >= 0.75:
-                        support_direction = -0.5
+                # first_limit_gap = 0.22  # limit_gap值
+                # if home_firstEleven_rate < 1 and away_firstEleven_rate < 1:
+                #     if rate_gap >= first_limit_gap:
+                #         if (home_firstEleven_rate > away_firstEleven_rate) and away_firstEleven_rate < 0.5:
+                #             support_direction = 1
+                #     if home_firstEleven_rate <= 0.40:
+                #         support_direction = -1
+                    # if away_firstEleven_rate >= 0.75:
+                    #     support_direction = -0.5
         # 已经获取首发了的比赛，pipeline中要判断has_analysed不update 下面else中几种数据信息
         else:
             home_firstEleven_rate = ''

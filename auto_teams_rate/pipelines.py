@@ -142,24 +142,26 @@ class AutoTeamsRatePipeline(object):
                         away_direction_probability = round(away_a_value*item['away_rate']/total_product_rate, 2)
 
                         # 将第一个支持方向改为文字
-                        if item['support_direction'] == 0:
-                            first_direction = '0'
-                        elif item['support_direction'] == 1:
-                            first_direction = '90%主队盘口(不超过两球),如果联赛不同还需要比较主-客rate差,基础是0.22,差两个联赛要求+0.20'
-                        elif item['support_direction'] == -1:
-                            first_direction = '主队90%无胜'
-                        elif item['support_direction'] == -0.5:
-                            first_direction = '主队70%不可能赢盘'
+                        # if item['support_direction'] == 0:
+                        #     first_direction = '0'
+                        # elif item['support_direction'] == 1:
+                        #     first_direction = '90%主队盘口(不超过两球),如果联赛不同还需要比较主-客rate差,基础是0.22,差两个联赛要求+0.20(不同联赛只买主队)'
+                        # elif item['support_direction'] == -1:
+                        #     first_direction = '主队90%无胜,如果联赛不同还需要比较主-客rate差,基础是0.22,差两个联赛要求+0.20'
+                        # elif item['support_direction'] == -0.5:
+                        #     first_direction = '主队70%不可能赢盘'
 
                         # 进一步分析support_direction
-                        if home_direction_probability >= 0.80:
+                        if home_direction_probability > 0.70:
                             if home_direction_probability > 0.90:
                                 second_direction = '主90%胜两球'
-                            else:
-                                if (item['home_rate'] - item['away_rate']) < -0.10:
-                                    second_direction = '主90%胜,但难胜两球'
-                                else:
-                                    second_direction = '主90%胜'
+                            # else:
+                            #     if (item['home_rate'] - item['away_rate']) < -0.10:
+                            #         second_direction = '主90%胜,但难胜两球'
+                            #     else:
+                            #         second_direction = '主90%胜'
+                        # if away_direction_probability >= 0.80:
+                        #     second_direction = '客80%不败,进球后或上半场后及时对冲'
 
                     cursor.execute('SELECT match_id FROM %s WHERE match_id=%s' % (tableName, item['match_id']))
                     table_row_len = len(cursor.fetchall())
